@@ -1,0 +1,122 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: example-role
+  namespace: "default"
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods/status
+  - services
+  - pods/portforward
+  - pods/log
+  - pods
+  - pods/event
+  - configmaps
+  - endpoints
+  - pods/exec
+  verbs:
+  - list
+  - watch
+  - describe
+  - create
+  - update
+  - patch
+  - get
+  - top
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - replicationcontrollers
+  - events
+  - serviceaccounts
+  - secrets
+  verbs:
+  - list
+  - watch
+  - describe
+  - get
+- apiGroups:
+  - apps
+  resources:
+  - replicasets
+  - deployments
+  verbs:
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - logs
+  - get
+  - delete
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  verbs:
+  - list
+  - watch
+  - describe
+  - create
+  - update
+  - patch
+  - get
+  - delete
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  - cronjobs
+  verbs:
+  - list
+  - watch
+  - describe
+  - create
+  - update
+  - patch
+  - get
+  - delete
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - list
+  - watch
+  - describe
+  - create
+  - update
+  - patch
+  - get
+  - delete
+- apiGroups:
+  - metrics.k8s.io
+  resources:
+  - pods
+  verbs:
+  - list
+  - watch
+  - get
+  - top
+- apiGroups:
+  - extensions
+  - networking.k8s.io
+  resources:
+  - ingresses
+  - ingresses/status
+  verbs:
+  - list
+  - watch
+  - get
+- apiGroups:
+  - ""
+  - events.k8s.io
+  resources:
+  - events
+  verbs:
+  - list
+  - watch
+  - get

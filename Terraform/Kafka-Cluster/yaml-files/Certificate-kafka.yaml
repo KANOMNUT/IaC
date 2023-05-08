@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kafka-tls
+  namespace: ${namespaces}
+spec:
+  secretName: kafka-tls
+  issuerRef:
+    name: acme-issuer
+    kind: ClusterIssuer
+    #group: cert-manager.io
+  #commonName: "*.kanomnutt.site"
+  subject:
+    organizations:
+    - KANOMNUTT
+  dnsNames:
+  - 'kafka-external.kanomnutt.site'
+  - 'kafka0.kanomnutt.site'
+  - 'kafka1.kanomnutt.site'
+  - 'kafka2.kanomnutt.site'
