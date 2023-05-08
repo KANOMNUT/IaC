@@ -1,0 +1,18 @@
+---
+- hosts: TiDB # Refer to host file
+  become: yes
+  tasks:
+  - name: Create User
+    mysql_user: # must install ansible collection before use via command ansible-galaxy collection install community.mysql
+      host: '%'
+      login_host: TiDBIP
+      login_port: 4000
+      login_user: TiDB account login
+      login_password: TiDB account password login
+      name: "{{ item.name }}"
+      password: "{{ item.password }}"
+      state: present
+      priv: '*.*:ALL' # << Priv
+    with_items:
+    - { name: 'admttex', password: "lsa16GIO?" } # << User password
+    - { name: 'thanachai.t', password: 'eA$@m1n' }

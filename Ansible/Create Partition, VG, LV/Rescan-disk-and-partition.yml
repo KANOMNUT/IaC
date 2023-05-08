@@ -1,0 +1,7 @@
+- hosts: <host>
+  become: yes
+  tasks:
+  - name: Rescan new partition
+    command: 'echo 1 >  /sys/class/block/sdx/device/rescan'
+  - name: Rescan new disk
+    command: 'echo "- - -" | tee /sys/class/scsi_host/host*/scan'

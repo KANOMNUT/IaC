@@ -1,0 +1,24 @@
+---
+- hosts: <host>
+  become: yes
+  tasks:
+  - name: create parition
+    parted:
+      device: <Partition Name>
+      number: <Partition Number>
+      flags: [ lvm ]
+      state: present
+      part_start: <Start Sector for this partition>
+      part_end: "100%"
+      fs_type: ext4
+  - name: extend vg
+    lvg:
+      vg: <VG Name>
+      pvs: <PV Name>
+      pvresize: yes
+  - name: extend lv
+    lvol:
+      vg: <VG Name>
+      lv: <LV Name>
+      size: "+100%FREE"
+

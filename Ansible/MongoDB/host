@@ -1,0 +1,7 @@
+[mongo]
+mongo0.replset.member ansible_ssh_host=10.195.100.11 
+mongo1.replset.member ansible_ssh_host=10.195.100.12 
+mongo2.replset.member ansible_ssh_host=10.195.100.13
+
+[mongo-primary]
+mongo0.replset.member ansible_ssh_host=10.195.100.11 

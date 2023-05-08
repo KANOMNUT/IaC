@@ -1,0 +1,20 @@
+---
+- hosts: <host>
+  become: yes
+  tasks:
+  - name: Create parition
+    parted:
+      device: <partition name>
+      number: <number of parition>
+      flags: [ lvm ]
+      state: present
+      part_end: "100%"
+  - name: Create VG
+    lvg:
+      vg: <vg name>
+      pvs: <pv name>
+  - name: Create LV
+    lvol:
+      vg: <vg name>
+      lv: <vg name>
+      size: "100%FREE"

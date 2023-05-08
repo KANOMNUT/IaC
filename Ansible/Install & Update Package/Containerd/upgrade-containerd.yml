@@ -1,0 +1,35 @@
+- hosts: <target host>
+  become: yes
+  tasks:
+  - name: Check version Containerd before upgrade
+    shell: containerd --version | cut -d ' ' -f3
+    register: ctr_vb
+
+  - name: Check version Runc before upgrade
+    shell: runc --version | grep version | cut -d ' ' -f3
+    register: runc_vb
+
+  - name: APT Update
+    apt:
+      update_cache: yes
+      allow_unauthenticated: yes
+
+  - name: Upgrade Containerd version
+    shell: "apt install containerd.io=1.6.13-1 -y --allow-change-held-packages"
+
+  - name: Check version Containerd
+    shell: containerd --version | cut -d ' ' -f3
+    register: ctr_v
+
+  - name: Check version Runc
+    shell: runc --version | grep version | cut -d ' ' -f3
+    register: runc_v
+
+  - name: Show Containerd & Runc version
+    set_fact:
+      ctrversionb: "{{ ctr_vb.stdout_lines }}"
+      runcversionb: "{{ runc_vb.stdout_lines }}"
+      ctrversion: "{{ ctr_v.stdout_lines }}"
+      runcversion: "{{ runc_v.stdout_lines }}"
+  - debug:
+      msg: Containerd upgrade version from {{ ctrversionb }} to {{ ctrversion }} and Runc upgrade from {{ runcversionb }} to {{ runcversion }}

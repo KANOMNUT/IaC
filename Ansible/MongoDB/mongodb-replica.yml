@@ -1,0 +1,47 @@
+---
+- hosts: mongo
+  become: yes
+  tasks:
+  - name: "Install pip"
+    apt:
+      name: python3-pip
+  - name: "Install pymongo via pip"
+    pip:
+      name: pymongo
+  - name: "Get hostname"
+    shell: uname -n
+    register: result
+  - name: "print var"
+    debug:
+      var: result
+  - name: "Add bind IP"
+    lineinfile:
+     path: /etc/mongod.conf
+     search_string: "bindIp:"
+     line: "  bindIp: 127.0.0.1,{{ result.stdout }} "
+  - name: "Enable Replication"
+    lineinfile:
+     path: /etc/mongod.conf
+     search_string: "#replication:"
+     line: "replication: \n  replSetName: rs0"
+  - name: "Restart mongod service"
+    service:
+     name: mongod
+     state: restarted
+
+
+- hosts: mongo-primary
+  become: yes
+  tasks:
+  - name: "Create replica set"
+    community.mongodb.mongodb_replicaset:
+      login_host: 10.195.100.11
+      replica_set: rs0
+      members:
+      - host: "mongo0.replset.member"
+        priority: 1
+      - host: "mongo1.replset.member"
+        priority: 0.5
+      - host: "mongo2.replset.member"
+        priority: 0.5
+

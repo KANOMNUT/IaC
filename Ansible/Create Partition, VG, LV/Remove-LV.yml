@@ -1,0 +1,19 @@
+---
+- hosts: <host>
+  become: yes
+  tasks:
+  - name: Remove LVM
+    lvol:
+      vg: <VG Name>
+      lv: <LV Name>
+      state: absent
+      force: true
+  - name: Remove VG
+    lvg:
+      vg: <VG Name>
+      state: absent
+  - name: Remove all partitions from disk
+    parted:
+      device: <Partition Name>
+      number: <Partition Number>
+      state: absent

@@ -1,0 +1,21 @@
+[kafka-dc]
+kafka-dc-01 ansible_ssh_host=10.195.100.50
+kafka-dc-02 ansible_ssh_host=10.195.100.51
+kafka-dc-03 ansible_ssh_host=10.195.100.54
+kafka-dc-04 ansible_ssh_host=10.195.100.56
+
+[kafka-dr]
+kafka-dr-01 ansible_ssh_host=10.195.100.52
+kafka-dr-02 ansible_ssh_host=10.195.100.53
+kafka-dr-03 ansible_ssh_host=10.195.100.55
+
+[NutNode]
+Node1 ansible_ssh_host=10.195.100.11
+Node2 ansible_ssh_host=10.195.100.12
+Node3 ansible_ssh_host=10.195.100.13
+
+[Ansible]
+Ansible_host ansible_ssh_host=10.195.100.10
+
+[TiDB]
+tidb ansible_ssh_host=10.195.100.140

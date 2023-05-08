@@ -1,0 +1,7 @@
+---
+- hosts: <host>
+  become: yes
+  tasks:
+  - name: Set Timzone to Asia/Bangkok
+    timezone:
+      name: Asia/Bangkok

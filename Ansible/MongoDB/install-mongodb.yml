@@ -1,0 +1,28 @@
+---
+- hosts: mongo
+  become: yes
+  tasks:
+  - name: "Add Key"
+    apt_key: 
+      url: https://www.mongodb.org/static/pgp/server-5.0.asc
+  - name: "Add MongoDB Repo"
+    apt_repository:
+      repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse"
+      update_cache: yes
+      filename: mongodb-commu
+  - name: "Install MongoDB"
+    apt: 
+      name: mongodb-org=5.0.9
+  - name: "Enable & start mongod service"
+    service:
+      name: mongod
+      state: started
+      enabled: true
+  - name: "Add file hosts"
+    lineinfile:
+      path: /etc/hosts
+      line: "{{ item }}"
+    with_items:
+    - 10.195.100.11 mongo0.replset.member
+    - 10.195.100.12 mongo1.replset.member
+    - 10.195.100.13 mongo2.replset.member

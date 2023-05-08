@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    package_name: redis-server # Change redis-server to package name you need to install.
+    service_status: redis # Change redis to service name you need to check status. 
+  tasks:
+  - name: Install {{ package_name }} package
+    apt:
+      name: "{{ package_name }}"
+      state: latest
+      update_cache: true
+  - name: Check service status
+    command: "systemctl status {{ service_status }}"
+    register: status
+  - name: Output service status
+    debug:
+      var: "status.stdout_lines "

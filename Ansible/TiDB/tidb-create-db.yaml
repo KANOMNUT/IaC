@@ -1,0 +1,15 @@
+---
+- hosts: TiDB # Refer to host file
+  become: yes
+  tasks:
+  - name: Create DB
+    mysql_db: # must install ansible collection before use via command ansible-galaxy collection install community.mysql
+      login_host: TiDBIP
+      login_port: 4000
+      login_user: TiDB account for login
+      login_password: <TiDB account password for login
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - test-db1 #<< DB name
+    - test-db2

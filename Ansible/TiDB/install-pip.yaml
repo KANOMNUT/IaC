@@ -1,0 +1,11 @@
+---
+# Ansible use Python to remote run a playbook need to install pip package and requirement first
+- hosts: TiDB # Refer to host file
+  become: yes
+  tasks:
+  - name: Install pip
+    apt:
+      name: python3-pip
+  - name: Install PyMySQL via pip
+    pip:
+      name: PyMySQL

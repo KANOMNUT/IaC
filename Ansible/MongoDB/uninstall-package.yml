@@ -1,0 +1,14 @@
+---
+- hosts: mongo
+  become: yes
+  tasks:
+  - name: "Stop mongod service"
+    service:
+      name: mongod
+      state: stopped
+  - name: "Uninstall package"
+    apt:
+      name: mongodb-org*
+      state: absent
+      autoremove: yes
+      purge: yes
